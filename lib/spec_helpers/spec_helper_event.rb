@@ -10,6 +10,7 @@ module WebsocketRails
       super(event_name, options)
       @triggered = false
       @dispatcher =  Dispatcher.new(nil)
+      @socket_id = options[:socket_id] || Faker::Number.number(4)
     end
 
     def trigger
@@ -22,7 +23,7 @@ module WebsocketRails
     end
 
     def connection
-      OpenStruct.new(:id => 1)
+      OpenStruct.new(:id => @socket_id)
     end
 
   end
