@@ -10,7 +10,13 @@ module WebsocketRails
       super(event_name, options)
       @triggered = false
       @dispatcher =  Dispatcher.new(nil)
-      @socket_id = options[:socket_id] || Faker::Number.number(4)
+
+      
+      if (options[:data] && options[:data][:_socket_id])
+        @socket_id = options[:data][:_socket_id]
+      else
+        @socket_id = Faker::Number.number(4)
+      end
     end
 
     def trigger
@@ -19,7 +25,7 @@ module WebsocketRails
 
     def dispatch
       @dispatcher.dispatch(self)
-      self
+      return self
     end
 
     def connection
